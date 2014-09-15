@@ -28,6 +28,7 @@ namespace LockScreenTest
         double y, vy, yToUnlock = 400;
         string hours = "", date = "";
         DispatcherTimer timer = new DispatcherTimer(), phyTimer = new DispatcherTimer();
+
         //System.Threading.Timer xnaTimer = new System.Threading.Timer(new System.Threading.TimerCallback(xnaTimerProc), null, 0, 100);
         // Constructor
         public MainPage()
@@ -204,7 +205,12 @@ namespace LockScreenTest
         {
             if (!SystemProtection.ScreenLocked)
             {
+                ((App)App.Current).wasLocked = false;
                 NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+            }
+            else
+            {
+                ((App)App.Current).wasLocked = true;
             }
 
             base.OnNavigatedTo(e);

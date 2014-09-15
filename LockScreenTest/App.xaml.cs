@@ -12,6 +12,8 @@ namespace LockScreenTest
 {
     public partial class App : Application
     {
+        public bool wasLocked;
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -79,6 +81,10 @@ namespace LockScreenTest
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            if (wasLocked & ((e.Reason == DeactivationReason.ApplicationAction) | (e.Reason == DeactivationReason.UserAction)))
+            {
+                this.Terminate();
+            }
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
