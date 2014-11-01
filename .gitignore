@@ -41,3 +41,6 @@ LockScreenTest/obj
 
 *.suo
 *.csproj.user
+*.sdf
+*.7z
+*.zip
