@@ -15,7 +15,8 @@ using Microsoft.Xna.Framework.Media;
 using System.Windows.Data;
 using System.Windows.Threading;
 using System.Windows.Media;
-//using LockScreen_Bridge;
+using Facet_Lockscreen_Bridge;
+using System.IO;
 
 namespace LockScreenTest
 {
@@ -23,6 +24,10 @@ namespace LockScreenTest
     {
         //LockScreenInfoProvider infoProvider = new LockScreenInfoProvider();
         //DeviceLockscreenSnapshot info;
+        LockScreenSnapshot lockInfo;
+        TextBlock[] txtDetailedTexts;
+        Image[] imgBadges;
+        TextBlock[] txtBadges;
 
         CompositeTransform transform = new CompositeTransform();
         double y, vy, yToUnlock = 400;
@@ -34,6 +39,9 @@ namespace LockScreenTest
         public MainPage()
         {
             InitializeComponent();
+            txtDetailedTexts = new TextBlock[] { txtDetailedText1, txtDetailedText2, txtDetailedText3 };
+            imgBadges = new Image[] { imgBadge1, imgBadge2, imgBadge3, imgBadge4, imgBadge5 };
+            txtBadges = new TextBlock[] { txtBadge1, txtBadge2, txtBadge3, txtBadge4, txtBadge5 };
 
             OverlayInformationPanel.RenderTransform = transform;
 
@@ -56,6 +64,24 @@ namespace LockScreenTest
             {
                 PlayPanel.Visibility = System.Windows.Visibility.Collapsed;
             }
+
+            if (MediaPlayer.IsRepeating)
+            {
+                btnLoop.Foreground = new SolidColorBrush((App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush).Color);
+            }
+            else
+            {
+                btnLoop.Foreground = new SolidColorBrush((App.Current.Resources["PhoneInactiveBrush"] as SolidColorBrush).Color);
+            }
+            if (MediaPlayer.IsShuffled)
+            {
+                btnShuffle.Foreground = new SolidColorBrush((App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush).Color);
+            }
+            else
+            {
+                btnShuffle.Foreground = new SolidColorBrush((App.Current.Resources["PhoneInactiveBrush"] as SolidColorBrush).Color);
+            }
+            timer_Tick(null, null);
         }
 
         void MediaPlayer_ActiveSongChanged(object sender, EventArgs e)
@@ -90,17 +116,33 @@ namespace LockScreenTest
             {
                 v = System.Windows.Visibility.Visible;
             }
-            Dispatcher.BeginInvoke(()=>
+            Dispatcher.BeginInvoke(() =>
                 {
                     BindingOperations.SetBinding(PlayPausePath, System.Windows.Shapes.Path.DataProperty, b);
                     PlayPanel.Visibility = v;
+                    if (MediaPlayer.IsRepeating)
+                    {
+                        btnLoop.Foreground = new SolidColorBrush((App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush).Color);
+                    }
+                    else
+                    {
+                        btnLoop.Foreground = new SolidColorBrush((App.Current.Resources["PhoneInactiveBrush"] as SolidColorBrush).Color);
+                    }
+                    if (MediaPlayer.IsShuffled)
+                    {
+                        btnShuffle.Foreground = new SolidColorBrush((App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush).Color);
+                    }
+                    else
+                    {
+                        btnShuffle.Foreground = new SolidColorBrush((App.Current.Resources["PhoneInactiveBrush"] as SolidColorBrush).Color);
+                    }
                 });
         }
 
         private void Button_Unlock_Click(object sender, RoutedEventArgs e)
         {
             //((Button)sender).Content = "Yes";
-            if(SystemProtection.ScreenLocked)
+            if (SystemProtection.ScreenLocked)
             {
                 SystemProtection.RequestScreenUnlock();
             }
@@ -108,12 +150,12 @@ namespace LockScreenTest
 
         private void PlayNext(object sender, RoutedEventArgs e)
         {
-             MediaPlayer.MoveNext();
+            MediaPlayer.MoveNext();
         }
 
         private void PlayPause(object sender, RoutedEventArgs e)
         {
-            if(MediaPlayer.State == MediaState.Playing)
+            if (MediaPlayer.State == MediaState.Playing)
             {
                 MediaPlayer.Pause();
             }
@@ -125,12 +167,64 @@ namespace LockScreenTest
 
         private void PlayPrev(object sender, RoutedEventArgs e)
         {
-              MediaPlayer.MovePrevious();
+            MediaPlayer.MovePrevious();
         }
 
         void timer_Tick(object sender, EventArgs e)
         {
-            //infoProvider.GetSnapshot(info);
+            LockScreenSnapshot newLockInfo = new LockScreenSnapshot(720, 1280);
+            if (LockInfoChanged(lockInfo, newLockInfo))
+            {
+                lockInfo = newLockInfo;
+                //Badges
+                if (lockInfo.HasTrayBadges)
+                {
+                    grdBadges.Visibility = System.Windows.Visibility.Visible;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (!String.IsNullOrEmpty(lockInfo.Badges[i].BadgeValue))
+                        {
+                            System.Windows.Media.Imaging.BitmapImage badge = new System.Windows.Media.Imaging.BitmapImage();
+                            if (lockInfo.Badges[i].BadgeIcon != null)
+                            {
+                                badge.SetSource(new MemoryStream(lockInfo.Badges[i].BadgeIcon));
+                            }
+                            else
+                            {
+                                var str = lockInfo.Badges[i].BadgeIconURI.Substring(7);
+                                badge.SetSource(new FileStream(lockInfo.Badges[i].BadgeIconURI.Substring(7), FileMode.Open));
+                            }
+                            imgBadges[i].Source = badge;
+                            txtBadges[i].Text = lockInfo.Badges[i].BadgeValue;
+                            imgBadges[i].Visibility = System.Windows.Visibility.Visible;
+                            txtBadges[i].Visibility = System.Windows.Visibility.Visible;
+                        }
+                        else
+                        {
+                            imgBadges[i].Visibility = System.Windows.Visibility.Collapsed;
+                            txtBadges[i].Visibility = System.Windows.Visibility.Collapsed;
+                        }
+                    }
+                }
+                else
+                {
+                    grdBadges.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                //Detailed texts
+                for (int i = 0; i < lockInfo.DetailedTexts.Count(); i++)
+                {
+                    if (!String.IsNullOrEmpty(lockInfo.DetailedTexts[i].Text))
+                    {
+                        txtDetailedTexts[i].Text = lockInfo.DetailedTexts[i].Text;
+                        txtDetailedTexts[i].FontWeight = (lockInfo.DetailedTexts[i].IsBold) ? FontWeights.Bold : FontWeights.Normal;
+                        txtDetailedTexts[i].Visibility = System.Windows.Visibility.Visible;
+                    }
+                    else
+                    {
+                        txtDetailedTexts[i].Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                }
+            }
             if (hours != DateTime.Now.ToString("HH:mm"))
             {
                 hours = DateTime.Now.ToString("HH:mm");
@@ -220,6 +314,63 @@ namespace LockScreenTest
         {
             //Do nothing
             e.Cancel = true;
+        }
+
+        bool LockInfoChanged(LockScreenSnapshot prev, LockScreenSnapshot cur)
+        {
+            if (prev == null) return true;
+            if (prev.Badges.Count() != cur.Badges.Count())
+            {
+                return true;
+            }
+            else
+            {
+                for (int i = 0; i < prev.Badges.Count(); i++)
+                {
+                    if (prev.Badges[i].BadgeIconURI != cur.Badges[i].BadgeIconURI) return true;
+                    if (prev.Badges[i].BadgeValue != cur.Badges[i].BadgeValue) return true;
+                }
+            }
+            if (prev.DetailedTexts.Count() != cur.DetailedTexts.Count())
+            {
+                return true;
+            }
+            else
+            {
+                for (int i = 0; i < prev.DetailedTexts.Count(); i++)
+                {
+                    if (prev.DetailedTexts[i].IsBold != cur.DetailedTexts[i].IsBold) return true;
+                    if (prev.DetailedTexts[i].Text != cur.DetailedTexts[i].Text) return true;
+                }
+            }
+            // TODO: more
+            return false;
+        }
+
+        private void Loop(object sender, RoutedEventArgs e)
+        {
+            MediaPlayer.IsRepeating = !MediaPlayer.IsRepeating;
+            if (MediaPlayer.IsRepeating)
+            {
+                btnLoop.Foreground = new SolidColorBrush((App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush).Color);
+            }
+            else
+            {
+                btnLoop.Foreground = new SolidColorBrush((App.Current.Resources["PhoneInactiveBrush"] as SolidColorBrush).Color);
+            }
+        }
+
+        private void Shuffle(object sender, RoutedEventArgs e)
+        {
+            MediaPlayer.IsShuffled = !MediaPlayer.IsShuffled;
+            if (MediaPlayer.IsShuffled)
+            {
+                btnShuffle.Foreground = new SolidColorBrush((App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush).Color);
+            }
+            else
+            {
+                btnShuffle.Foreground = new SolidColorBrush((App.Current.Resources["PhoneInactiveBrush"] as SolidColorBrush).Color);
+            }
         }
     }
 }
