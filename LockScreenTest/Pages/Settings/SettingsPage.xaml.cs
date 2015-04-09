@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using Facet_Lockscreen_Bridge;
 using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace LockScreenTest
 {
@@ -29,6 +30,8 @@ namespace LockScreenTest
         Image[] imgBadges;
         TextBlock[] txtBadges;
 
+        MediaElement me = new MediaElement();
+
         CompositeTransform transform = new CompositeTransform();
         double y, vy, yToUnlock = 400;
         string hours = "", date = "";
@@ -39,6 +42,24 @@ namespace LockScreenTest
         public MainPage()
         {
             InitializeComponent();
+
+            ImageBrush backPic = new ImageBrush();
+            VideoBrush backVid;
+            
+            if (System.IO.File.Exists("D:\\Background.mp4"))
+            {
+                BackVideo.Source = new Uri("D:\\Background.mp4", UriKind.Absolute);
+                backVid = new VideoBrush();
+                backVid.SourceName = "BackVideo";
+                backVid.Stretch = Stretch.UniformToFill;
+                BackgroundImage.Background = backVid;
+            }
+            else
+            {
+                backPic.ImageSource = new BitmapImage(new Uri("C:\\Data\\Users\\DefApps\\APPDATA\\Local\\Packages\\86dd9094-396f-4cd6-b128-9dfbf7c5808d_48p39djvdh4am\\LocalState\\Background.jpg", UriKind.Absolute));
+                BackgroundImage.Background = backPic;
+            }
+
             txtDetailedTexts = new TextBlock[] { txtDetailedText1, txtDetailedText2, txtDetailedText3 };
             imgBadges = new Image[] { imgBadge1, imgBadge2, imgBadge3, imgBadge4, imgBadge5 };
             txtBadges = new TextBlock[] { txtBadge1, txtBadge2, txtBadge3, txtBadge4, txtBadge5 };
@@ -305,6 +326,7 @@ namespace LockScreenTest
             else
             {
                 ((App)App.Current).wasLocked = true;
+                FadeInAnimation.Begin();
             }
 
             base.OnNavigatedTo(e);
@@ -371,6 +393,12 @@ namespace LockScreenTest
             {
                 btnShuffle.Foreground = new SolidColorBrush((App.Current.Resources["PhoneInactiveBrush"] as SolidColorBrush).Color);
             }
+        }
+
+        private void BackVideo_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            BackVideo.Position = TimeSpan.Zero;
+            BackVideo.Play();
         }
     }
 }
