@@ -104,6 +104,13 @@ namespace LockScreenTest
                 // A navigation has failed; break into the debugger
                 Debugger.Break();
             }
+            e.Handled = true;
+            (RootFrame as Microsoft.Phone.Controls.PhoneApplicationFrame).Source = new Uri("/MainPage.xaml", UriKind.Relative);
+            // For UI consistency, clear the entire page stack
+            while (RootFrame.RemoveBackEntry() != null)
+            {
+                ; // do nothing
+            }
         }
 
         // Code to execute on Unhandled Exceptions

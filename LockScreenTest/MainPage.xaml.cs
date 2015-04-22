@@ -18,11 +18,13 @@ using System.Windows.Media;
 using Facet_Lockscreen_Bridge;
 using System.IO;
 using System.Windows.Media.Imaging;
+using System.IO.IsolatedStorage;
 
 namespace LockScreenTest
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        IsolatedStorageFile bg = IsolatedStorageFile.GetUserStoreForApplication();
         //LockScreenInfoProvider infoProvider = new LockScreenInfoProvider();
         //DeviceLockscreenSnapshot info;
         LockScreenSnapshot lockInfo;
@@ -45,10 +47,18 @@ namespace LockScreenTest
 
             ImageBrush backPic = new ImageBrush();
             VideoBrush backVid;
-            
-            if (System.IO.File.Exists("D:\\Background.mp4"))
+
+            //string tpmdf = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            if (System.IO.File.Exists("D:\\Background.mp4") && MediaPlayer.Queue.Count <= 0)
             {
-                BackVideo.Source = new Uri("D:\\Background.mp4", UriKind.Absolute);
+                MediaElement md = new MediaElement();
+                md.Name = "BackVideo";
+                md.IsMuted = true;
+                md.IsHitTestVisible = false;
+                md.Opacity = 0.0;
+                md.MediaEnded += BackVideo_MediaEnded;
+                LayoutRoot.Children.Add(md);
+                md.Source = new Uri("D:\\Background.mp4", UriKind.Absolute);
                 backVid = new VideoBrush();
                 backVid.SourceName = "BackVideo";
                 backVid.Stretch = Stretch.UniformToFill;
@@ -56,8 +66,17 @@ namespace LockScreenTest
             }
             else
             {
-                backPic.ImageSource = new BitmapImage(new Uri("C:\\Data\\Users\\DefApps\\APPDATA\\Local\\Packages\\86dd9094-396f-4cd6-b128-9dfbf7c5808d_48p39djvdh4am\\LocalState\\Background.jpg", UriKind.Absolute));
-                BackgroundImage.Background = backPic;
+                //if (File.Exists("C:\\Data\\Users\\DefApps\\APPDATA\\Local\\Packages\\86dd9094-396f-4cd6-b128-9dfbf7c5808d_48p39djvdh4am\\LocalState\\Background.jpg"))
+                if (bg.FileExists("Background.jpg"))
+                {
+                    IsolatedStorageFileStream stream = bg.OpenFile("Background.jpg", System.IO.FileMode.Open, FileAccess.Read);
+                    BitmapImage bmp = new BitmapImage();
+                    bmp.SetSource(stream);
+                    //backPic.ImageSource = new BitmapImage(new Uri("C:\\Data\\Users\\Public\\Background.jpg", UriKind.Absolute));
+                    backPic.ImageSource = bmp;
+                    BackgroundImage.Background = backPic;
+                    stream.Close();
+                }
             }
 
             txtDetailedTexts = new TextBlock[] { txtDetailedText1, txtDetailedText2, txtDetailedText3 };
@@ -397,8 +416,8 @@ namespace LockScreenTest
 
         private void BackVideo_MediaEnded(object sender, RoutedEventArgs e)
         {
-            BackVideo.Position = TimeSpan.Zero;
-            BackVideo.Play();
+            (sender as MediaElement).Position = TimeSpan.Zero;
+            (sender as MediaElement).Play();
         }
     }
 }

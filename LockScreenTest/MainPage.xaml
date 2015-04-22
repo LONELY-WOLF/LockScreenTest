@@ -137,7 +137,7 @@
             </Storyboard>
         </Grid.Resources>
         <!--<MediaElement x:Name="BackVideo" Source="C:\\Data\\Users\\DefApps\\APPDATA\\Local\\Packages\\86dd9094-396f-4cd6-b128-9dfbf7c5808d_48p39djvdh4am\\LocalState\\Background.mp4" IsMuted="True" IsHitTestVisible="False" Opacity="0.0" />-->
-        <MediaElement x:Name="BackVideo" IsMuted="True" IsHitTestVisible="False" Opacity="0.0"  MediaEnded="BackVideo_MediaEnded"/>
+        <!--<MediaElement x:Name="BackVideo" IsMuted="True" IsHitTestVisible="False" Opacity="0.0"  MediaEnded="BackVideo_MediaEnded"/>-->
         <Grid x:Name="LockScreenPanel">
             <Border x:Name="BackgroundImage" CacheMode="BitmapCache">
                 <!--<Border.Background>

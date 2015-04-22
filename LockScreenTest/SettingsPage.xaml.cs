@@ -11,6 +11,7 @@ using Windows.Phone.System.LockScreenExtensibility;
 using Microsoft.Phone.Tasks;
 using System.IO.IsolatedStorage;
 using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace LockScreenTest
 {
@@ -35,10 +36,11 @@ namespace LockScreenTest
             string[] names = bg.GetFileNames();
             if (bg.FileExists("Background.jpg"))
             {
-                IsolatedStorageFileStream stream = bg.OpenFile("Background.jpg", System.IO.FileMode.Open);
+                IsolatedStorageFileStream stream = bg.OpenFile("Background.jpg", FileMode.Open, FileAccess.Read);
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.SetSource(stream);
                 bgImage.Source = bitmap;
+                stream.Close();
             }
             useIt.IsChecked = ExtensibilityApp.IsLockScreenApplicationRegistered();
         }
@@ -57,6 +59,7 @@ namespace LockScreenTest
             if (e.ChosenPhoto != null)
             {
                 IsolatedStorageFileStream stream = bg.CreateFile("Background.jpg");
+                //FileStream stream = File.Create("C:\\Data\\Users\\Public\\Pictures\\Background.jpg");
                 e.ChosenPhoto.CopyTo(stream);
                 stream.Close();
 
