@@ -5,9 +5,10 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockScreenTest", "LockScreenTest\LockScreenTest.csproj", "{C6A1AA4B-49D7-434D-97E8-6B580DD982AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfLock", "WolfLock\WolfLock.csproj", "{9B06A353-FECA-46C8-837E-5DD87A442AB6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockBridge", "LockBridge\LockBridge.csproj", "{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8051C0F8-24DF-49A2-BD93-CA238ABCEF66}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,48 +46,11 @@ Global
 		{C6A1AA4B-49D7-434D-97E8-6B580DD982AD}.Release|x86.ActiveCfg = Release|x86
 		{C6A1AA4B-49D7-434D-97E8-6B580DD982AD}.Release|x86.Build.0 = Release|x86
 		{C6A1AA4B-49D7-434D-97E8-6B580DD982AD}.Release|x86.Deploy.0 = Release|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|ARM.ActiveCfg = Debug|ARM
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|ARM.Build.0 = Debug|ARM
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|ARM.Deploy.0 = Debug|ARM
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|Win32.ActiveCfg = Debug|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|Win32.Build.0 = Debug|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|Win32.Deploy.0 = Debug|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|x86.ActiveCfg = Debug|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|x86.Build.0 = Debug|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Debug|x86.Deploy.0 = Debug|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|ARM.ActiveCfg = Release|ARM
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|ARM.Build.0 = Release|ARM
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|ARM.Deploy.0 = Release|ARM
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|Win32.ActiveCfg = Release|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|Win32.Build.0 = Release|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|Win32.Deploy.0 = Release|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|x86.ActiveCfg = Release|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|x86.Build.0 = Release|x86
-		{9B06A353-FECA-46C8-837E-5DD87A442AB6}.Release|x86.Deploy.0 = Release|x86
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Debug|ARM.ActiveCfg = Debug|ARM
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Debug|ARM.Build.0 = Debug|ARM
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Debug|Win32.ActiveCfg = Debug|x86
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Debug|Win32.Build.0 = Debug|x86
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Debug|x86.ActiveCfg = Debug|x86
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Debug|x86.Build.0 = Debug|x86
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Release|ARM.ActiveCfg = Release|ARM
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Release|ARM.Build.0 = Release|ARM
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Release|Win32.ActiveCfg = Release|x86
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Release|Win32.Build.0 = Release|x86
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Release|x86.ActiveCfg = Release|x86
-		{F4D980CD-C6FC-46EE-A37C-4918E786B3BB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

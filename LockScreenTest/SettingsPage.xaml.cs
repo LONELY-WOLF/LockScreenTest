@@ -62,7 +62,7 @@ namespace LockScreenTest
                 //FileStream stream = File.Create("C:\\Data\\Users\\Public\\Pictures\\Background.jpg");
                 e.ChosenPhoto.CopyTo(stream);
                 stream.Close();
-
+                
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.SetSource(e.ChosenPhoto);
                 bgImage.Source = bitmap;

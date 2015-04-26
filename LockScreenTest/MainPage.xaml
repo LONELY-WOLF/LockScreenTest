@@ -15,7 +15,6 @@
     shell:SystemTray.BackgroundColor="Black"
     shell:SystemTray.Opacity="0.5" BackKeyPress="PhoneApplicationPage_BackKeyPress">
     <phone:PhoneApplicationPage.Resources>
-        <!--<ImageBrush x:Key="BackPic" ImageSource="C:\\Data\\Users\\DefApps\\APPDATA\\Local\\Packages\\86dd9094-396f-4cd6-b128-9dfbf7c5808d_48p39djvdh4am\\LocalState\\Background.jpg"/>-->
         <SolidColorBrush x:Key="BlackBackground" Color="Black" Opacity="0.5"/>
         <Style x:Key="ButtonPlayerStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
@@ -136,14 +135,8 @@
                 <DoubleAnimation Storyboard.TargetName="LockScreenPanel" Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:1"/>
             </Storyboard>
         </Grid.Resources>
-        <!--<MediaElement x:Name="BackVideo" Source="C:\\Data\\Users\\DefApps\\APPDATA\\Local\\Packages\\86dd9094-396f-4cd6-b128-9dfbf7c5808d_48p39djvdh4am\\LocalState\\Background.mp4" IsMuted="True" IsHitTestVisible="False" Opacity="0.0" />-->
-        <!--<MediaElement x:Name="BackVideo" IsMuted="True" IsHitTestVisible="False" Opacity="0.0"  MediaEnded="BackVideo_MediaEnded"/>-->
         <Grid x:Name="LockScreenPanel">
-            <Border x:Name="BackgroundImage" CacheMode="BitmapCache">
-                <!--<Border.Background>
-                    <ImageBrush ImageSource="C:\\Data\\Users\\DefApps\\APPDATA\\Local\\Packages\\86dd9094-396f-4cd6-b128-9dfbf7c5808d_48p39djvdh4am\\LocalState\\Background.jpg"/>
-                </Border.Background>-->
-            </Border>
+            <Border x:Name="BackgroundImage" CacheMode="BitmapCache"/>
             <Canvas Background="{StaticResource BlackBackground}" VerticalAlignment="Top" Height="32" />
             <Grid x:Name="OverlayInformationPanel" ManipulationDelta="OverlayInformationPanel_ManipulationDelta" ManipulationCompleted="OverlayInformationPanel_ManipulationCompleted" RenderTransformOrigin="0.5,0.5" Background="{StaticResource TransparentBrush}" SizeChanged="OverlayInformationPanel_SizeChanged" ManipulationStarted="OverlayInformationPanel_ManipulationStarted">
                 <StackPanel Orientation="Vertical" Background="{StaticResource BlackBackground}" CacheMode="BitmapCache" VerticalAlignment="Top" Margin="0,32,0,0" >

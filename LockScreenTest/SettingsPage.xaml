@@ -41,7 +41,7 @@
             <Image x:Name="bgImage" Margin="10" Height="160" Width="160" Stretch="UniformToFill" Source="Background.jpg" />
             <Button Content="change background" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Click"/>
             <CheckBox x:Name="useIt" Content="use as lockscreen app" Grid.Row="1" Grid.ColumnSpan="2" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
-            <TextBlock Text="You can set video as wallpaper. Copy video file named Background.mp4 to SD card. Video wallpaper will only appear when there is no playing music. Otherwise it uses selected picture." TextWrapping="Wrap" Grid.Row="2" Grid.ColumnSpan="2"/>
+            <TextBlock Text="You can also use video as wallpaper. To do so copy video file named Background.mjpg (raw MJPEG) to SD card." TextWrapping="Wrap" Grid.Row="2" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>
 

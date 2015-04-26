@@ -57,7 +57,6 @@ namespace LockScreenTest
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
-
         }
 
         // Code to execute when a contract activation such as a file open or save picker returns 
@@ -105,7 +104,7 @@ namespace LockScreenTest
                 Debugger.Break();
             }
             e.Handled = true;
-            (RootFrame as Microsoft.Phone.Controls.PhoneApplicationFrame).Source = new Uri("/MainPage.xaml", UriKind.Relative);
+            RootFrame.Source = new Uri("/MainPage.xaml", UriKind.Relative);
             // For UI consistency, clear the entire page stack
             while (RootFrame.RemoveBackEntry() != null)
             {

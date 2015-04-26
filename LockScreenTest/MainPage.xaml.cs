@@ -25,21 +25,22 @@ namespace LockScreenTest
     public partial class MainPage : PhoneApplicationPage
     {
         IsolatedStorageFile bg = IsolatedStorageFile.GetUserStoreForApplication();
-        //LockScreenInfoProvider infoProvider = new LockScreenInfoProvider();
-        //DeviceLockscreenSnapshot info;
         LockScreenSnapshot lockInfo;
         TextBlock[] txtDetailedTexts;
         Image[] imgBadges;
         TextBlock[] txtBadges;
+
+        MemoryStream buffer, buf2;
+        int framePtr = 0;
+        BitmapImage bmp;
 
         MediaElement me = new MediaElement();
 
         CompositeTransform transform = new CompositeTransform();
         double y, vy, yToUnlock = 400;
         string hours = "", date = "";
-        DispatcherTimer timer = new DispatcherTimer(), phyTimer = new DispatcherTimer();
+        DispatcherTimer timer = new DispatcherTimer(), phyTimer = new DispatcherTimer(), videoTimer = new DispatcherTimer();
 
-        //System.Threading.Timer xnaTimer = new System.Threading.Timer(new System.Threading.TimerCallback(xnaTimerProc), null, 0, 100);
         // Constructor
         public MainPage()
         {
@@ -48,31 +49,28 @@ namespace LockScreenTest
             ImageBrush backPic = new ImageBrush();
             VideoBrush backVid;
 
-            //string tpmdf = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            if (System.IO.File.Exists("D:\\Background.mp4") && MediaPlayer.Queue.Count <= 0)
+            if (System.IO.File.Exists("D:\\Background.mjpg"))
             {
-                MediaElement md = new MediaElement();
-                md.Name = "BackVideo";
-                md.IsMuted = true;
-                md.IsHitTestVisible = false;
-                md.Opacity = 0.0;
-                md.MediaEnded += BackVideo_MediaEnded;
-                LayoutRoot.Children.Add(md);
-                md.Source = new Uri("D:\\Background.mp4", UriKind.Absolute);
-                backVid = new VideoBrush();
-                backVid.SourceName = "BackVideo";
-                backVid.Stretch = Stretch.UniformToFill;
-                BackgroundImage.Background = backVid;
+                FileStream file = new FileStream("D:\\Background.mjpg", FileMode.Open, FileAccess.Read);
+                buffer = new MemoryStream((int)file.Length);
+                file.CopyTo(buffer);
+                file.Close();
+                bmp = new BitmapImage();
+                bmp.SetSource(buffer);
+                backPic.ImageSource = bmp;
+                BackgroundImage.Background = backPic;
+
+                videoTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+                videoTimer.Tick += videoTimer_Tick;
+                videoTimer.Start();
             }
             else
             {
-                //if (File.Exists("C:\\Data\\Users\\DefApps\\APPDATA\\Local\\Packages\\86dd9094-396f-4cd6-b128-9dfbf7c5808d_48p39djvdh4am\\LocalState\\Background.jpg"))
                 if (bg.FileExists("Background.jpg"))
                 {
                     IsolatedStorageFileStream stream = bg.OpenFile("Background.jpg", System.IO.FileMode.Open, FileAccess.Read);
-                    BitmapImage bmp = new BitmapImage();
+                    bmp = new BitmapImage();
                     bmp.SetSource(stream);
-                    //backPic.ImageSource = new BitmapImage(new Uri("C:\\Data\\Users\\Public\\Background.jpg", UriKind.Absolute));
                     backPic.ImageSource = bmp;
                     BackgroundImage.Background = backPic;
                     stream.Close();
@@ -122,6 +120,39 @@ namespace LockScreenTest
                 btnShuffle.Foreground = new SolidColorBrush((App.Current.Resources["PhoneInactiveBrush"] as SolidColorBrush).Color);
             }
             timer_Tick(null, null);
+        }
+
+        void videoTimer_Tick(object sender, EventArgs e)
+        {
+            buffer.Position = framePtr + 2;
+            for (; ; )
+            {
+                if (buffer.Position == buffer.Length)
+                {
+                    buffer.Position = 0;
+                }
+                if (buffer.ReadByte() == 0xFF)
+                {
+                    if (buffer.ReadByte() == 0xD8)
+                    {
+                        buffer.Position -= 2;
+                        break;
+                    }
+                    else
+                    {
+                        buffer.Position--;
+                    }
+                }
+            }
+            if (buffer.Position >= (buffer.Length - 2))
+            {
+                buffer.Position = 0;
+            }
+            framePtr = (int)buffer.Position;
+            buf2 = new MemoryStream((int)(buffer.Length - framePtr));
+            buffer.CopyTo(buf2);
+            buf2.Position = 0;
+            bmp.SetSource(buf2);
         }
 
         void MediaPlayer_ActiveSongChanged(object sender, EventArgs e)
@@ -288,7 +319,6 @@ namespace LockScreenTest
             y = e.CumulativeManipulation.Translation.Y;
             vy = e.Velocities.LinearVelocity.Y;
             transform.TranslateY = (y < 0.0) ? y : 0.0;
-            //OverlayInformationPanel.RenderTransform = transform;
         }
 
         private void OverlayInformationPanel_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
@@ -345,7 +375,7 @@ namespace LockScreenTest
             else
             {
                 ((App)App.Current).wasLocked = true;
-                FadeInAnimation.Begin();
+                //FadeInAnimation.Begin();
             }
 
             base.OnNavigatedTo(e);
