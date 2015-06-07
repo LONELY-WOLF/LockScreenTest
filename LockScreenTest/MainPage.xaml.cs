@@ -47,7 +47,6 @@ namespace LockScreenTest
             InitializeComponent();
 
             ImageBrush backPic = new ImageBrush();
-            VideoBrush backVid;
 
             if (System.IO.File.Exists("D:\\Background.mjpg"))
             {

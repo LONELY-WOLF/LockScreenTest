@@ -138,9 +138,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LockScreenTest_2015_04_24_17_09_24.sap" />
-    <None Include="LockScreenTest_2015_04_24_17_28_03.sap" />
-    <None Include="LockScreenTest_2015_04_24_17_42_36.sap" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
@@ -184,8 +181,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Facet_Lockscreen_Bridge">
-      <HintPath>..\..\..\refs\Facet_Lockscreen_Bridge.winmd</HintPath>
+    <Reference Include="Facet_Lockscreen_Bridge, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\refs\Facet_Lockscreen_Bridge.winmd</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Drawing" />
   </ItemGroup>
