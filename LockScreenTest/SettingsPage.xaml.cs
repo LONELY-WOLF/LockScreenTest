@@ -49,8 +49,9 @@ namespace LockScreenTest
         {
             PhotoChooserTask chooser = new PhotoChooserTask();
             chooser.Completed += chooser_Completed;
-            chooser.PixelHeight = (int)Application.Current.Host.Content.ActualHeight;
-            chooser.PixelWidth = (int)Application.Current.Host.Content.ActualWidth;
+            var cont = Application.Current.Host.Content;
+            chooser.PixelHeight = (int)Math.Ceiling(cont.ActualHeight * cont.ScaleFactor / 100.0);
+            chooser.PixelWidth = (int)Math.Ceiling(cont.ActualWidth * cont.ScaleFactor / 100.0);
             chooser.Show();
         }
 

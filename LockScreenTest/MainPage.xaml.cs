@@ -242,7 +242,8 @@ namespace LockScreenTest
 
         void timer_Tick(object sender, EventArgs e)
         {
-            LockScreenSnapshot newLockInfo = new LockScreenSnapshot(720, 1280);
+            var cont = Application.Current.Host.Content;
+            LockScreenSnapshot newLockInfo = new LockScreenSnapshot((int)Math.Ceiling(cont.ActualWidth * cont.ScaleFactor / 100.0), (int)Math.Ceiling(cont.ActualHeight * cont.ScaleFactor / 100.0));
             if (LockInfoChanged(lockInfo, newLockInfo))
             {
                 lockInfo = newLockInfo;
