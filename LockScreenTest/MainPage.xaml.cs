@@ -35,18 +35,14 @@ namespace LockScreenTest
         BitmapImage bmp;
 
         MediaElement me = new MediaElement();
-
-        CompositeTransform transform = new CompositeTransform();
-        double y, vy, yToUnlock = 400;
+        double y, yToUnlock = 400;
         string hours = "", date = "";
-        DispatcherTimer timer = new DispatcherTimer(), phyTimer = new DispatcherTimer(), videoTimer = new DispatcherTimer();
+        DispatcherTimer timer = new DispatcherTimer(), videoTimer = new DispatcherTimer();
 
         // Constructor
         public MainPage()
         {
             InitializeComponent();
-
-            ImageBrush backPic = new ImageBrush();
 
             if (System.IO.File.Exists("D:\\Background.mjpg"))
             {
@@ -56,8 +52,7 @@ namespace LockScreenTest
                 file.Close();
                 bmp = new BitmapImage();
                 bmp.SetSource(buffer);
-                backPic.ImageSource = bmp;
-                BackgroundImage.Background = backPic;
+                BackgroundImage.Source = bmp;
 
                 videoTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
                 videoTimer.Tick += videoTimer_Tick;
@@ -70,8 +65,7 @@ namespace LockScreenTest
                     IsolatedStorageFileStream stream = bg.OpenFile("Background.jpg", System.IO.FileMode.Open, FileAccess.Read);
                     bmp = new BitmapImage();
                     bmp.SetSource(stream);
-                    backPic.ImageSource = bmp;
-                    BackgroundImage.Background = backPic;
+                    BackgroundImage.Source = bmp;
                     stream.Close();
                 }
             }
@@ -80,14 +74,9 @@ namespace LockScreenTest
             imgBadges = new Image[] { imgBadge1, imgBadge2, imgBadge3, imgBadge4, imgBadge5 };
             txtBadges = new TextBlock[] { txtBadge1, txtBadge2, txtBadge3, txtBadge4, txtBadge5 };
 
-            OverlayInformationPanel.RenderTransform = transform;
-
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             timer.Tick += timer_Tick;
             timer.Start();
-
-            phyTimer.Interval = new TimeSpan(0, 0, 0, 0, 15);
-            phyTimer.Tick += phyTimer_Tick;
 
             MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
             MediaPlayer.ActiveSongChanged += MediaPlayer_ActiveSongChanged;
@@ -317,8 +306,7 @@ namespace LockScreenTest
         private void OverlayInformationPanel_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
         {
             y = e.CumulativeManipulation.Translation.Y;
-            vy = e.Velocities.LinearVelocity.Y;
-            transform.TranslateY = (y < 0.0) ? y : 0.0;
+            OverlayInformationPanelTranslateTransform.Y = (y < 0.0) ? y : 0.0;
         }
 
         private void OverlayInformationPanel_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
@@ -329,40 +317,18 @@ namespace LockScreenTest
             }
             else
             {
-                phyTimer.Start();
+                OverlayInformationPanelDraggingToLockedStoryboard.Begin();
             }
-        }
-
-        void phyTimer_Tick(object sender, EventArgs e)
-        {
-            vy += 1.0;
-            y += vy;
-            if (y > 0) //Down end
-            {
-                transform.TranslateY = 0.0;
-                phyTimer.Stop();
-                return;
-            }
-            if (y < yToUnlock)
-            {
-                phyTimer.Stop();
-                if (SystemProtection.ScreenLocked)
-                {
-                    SystemProtection.RequestScreenUnlock();
-                }
-                return;
-            }
-            transform.TranslateY = y;
         }
 
         private void OverlayInformationPanel_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
         {
-            phyTimer.Stop();
+            
         }
 
         private void OverlayInformationPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            yToUnlock = -e.NewSize.Height * 0.2;
+            yToUnlock = -e.NewSize.Height * 0.3;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -375,7 +341,7 @@ namespace LockScreenTest
             else
             {
                 ((App)App.Current).wasLocked = true;
-                //FadeInAnimation.Begin();
+                FadeInAnimation.Begin();
             }
 
             base.OnNavigatedTo(e);

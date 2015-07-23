@@ -130,15 +130,27 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Black">
-        <Grid.Resources>
-            <Storyboard x:Name="FadeInAnimation">
-                <DoubleAnimation Storyboard.TargetName="LockScreenPanel" Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:1"/>
-            </Storyboard>
-        </Grid.Resources>
         <Grid x:Name="LockScreenPanel">
-            <Border x:Name="BackgroundImage" CacheMode="BitmapCache"/>
-            <Canvas Background="{StaticResource BlackBackground}" VerticalAlignment="Top" Height="32" />
+            <Grid.Resources>
+                <Storyboard x:Name="FadeInAnimation">
+                    <DoubleAnimation Storyboard.TargetName="BackgroundImage" Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:0.7"/>
+                </Storyboard>
+            </Grid.Resources>
+            <Image x:Name="BackgroundImage" CacheMode="BitmapCache" Opacity="0.0" Stretch="UniformToFill"/>
+            <Rectangle Fill="{StaticResource BlackBackground}" VerticalAlignment="Top" Height="32" />
             <Grid x:Name="OverlayInformationPanel" ManipulationDelta="OverlayInformationPanel_ManipulationDelta" ManipulationCompleted="OverlayInformationPanel_ManipulationCompleted" RenderTransformOrigin="0.5,0.5" Background="{StaticResource TransparentBrush}" SizeChanged="OverlayInformationPanel_SizeChanged" ManipulationStarted="OverlayInformationPanel_ManipulationStarted">
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="OverlayInformationPanelTranslateTransform"/>
+                </Grid.RenderTransform>
+                <Grid.Resources>
+                    <Storyboard x:Name="OverlayInformationPanelDraggingToLockedStoryboard">
+                        <DoubleAnimation Storyboard.TargetName="OverlayInformationPanelTranslateTransform" Storyboard.TargetProperty="Y" To="0.0" Duration="0:0:0.7">
+                            <DoubleAnimation.EasingFunction>
+                                <BounceEase EasingMode="EaseOut" Bounces="3" Bounciness="3"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </Grid.Resources>
                 <StackPanel Orientation="Vertical" Background="{StaticResource BlackBackground}" CacheMode="BitmapCache" VerticalAlignment="Top" Margin="0,32,0,0" >
                     <Grid Name="grdBadges" Height="32" CacheMode="BitmapCache">
                         <Grid.ColumnDefinitions>
