@@ -35,6 +35,7 @@ namespace LockScreenTest
         BitmapImage bmp;
 
         MediaElement me = new MediaElement();
+        double gestureLength = 0.2;
         double y, yToUnlock = 400;
         string hours = "", date = "";
         DispatcherTimer timer = new DispatcherTimer(), videoTimer = new DispatcherTimer();
@@ -43,6 +44,11 @@ namespace LockScreenTest
         public MainPage()
         {
             InitializeComponent();
+
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("GestureLength"))
+            {
+                gestureLength = (double)IsolatedStorageSettings.ApplicationSettings["GestureLength"];
+            }
 
             if (System.IO.File.Exists("D:\\Background.mjpg"))
             {
@@ -328,7 +334,7 @@ namespace LockScreenTest
 
         private void OverlayInformationPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            yToUnlock = -e.NewSize.Height * 0.3;
+            yToUnlock = -e.NewSize.Height * gestureLength;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

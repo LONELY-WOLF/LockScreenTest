@@ -32,6 +32,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -41,7 +43,9 @@
             <Image x:Name="bgImage" Margin="10" Height="160" Width="160" Stretch="UniformToFill" Source="Background.jpg" />
             <Button Content="change background" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Click"/>
             <CheckBox x:Name="useIt" Content="use as lockscreen app" Grid.Row="1" Grid.ColumnSpan="2" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
-            <TextBlock Text="You can also use video as wallpaper. To do so copy video file named Background.mjpg (raw MJPEG) to SD card." TextWrapping="Wrap" Grid.Row="2" Grid.ColumnSpan="2"/>
+            <TextBlock Text="{Binding Value, ElementName=lengthSlider, StringFormat=Unlock gesture length: \{0:F2\} of screen height}" Grid.Row="2" Grid.ColumnSpan="2"/>
+            <Slider x:Name="lengthSlider" Minimum="0.1" Maximum="0.6" SmallChange="0.1" Grid.Row="3" Grid.ColumnSpan="2"/>
+            <TextBlock Text="You can also use video as wallpaper. To do so copy video file named Background.mjpg (raw MJPEG) to SD card." TextWrapping="Wrap" Grid.Row="99" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>
 

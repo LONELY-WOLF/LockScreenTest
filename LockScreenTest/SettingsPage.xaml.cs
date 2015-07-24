@@ -31,6 +31,20 @@ namespace LockScreenTest
             base.OnNavigatedTo(e);
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("GestureLength"))
+            {
+                IsolatedStorageSettings.ApplicationSettings["GestureLength"] = lengthSlider.Value;
+            }
+            else
+            {
+                IsolatedStorageSettings.ApplicationSettings.Add("GestureLength", lengthSlider.Value);
+            }
+            
+            base.OnNavigatedFrom(e);
+        }
+
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             string[] names = bg.GetFileNames();
@@ -41,6 +55,14 @@ namespace LockScreenTest
                 bitmap.SetSource(stream);
                 bgImage.Source = bitmap;
                 stream.Close();
+            }
+            if(IsolatedStorageSettings.ApplicationSettings.Contains("GestureLength"))
+            {
+                lengthSlider.Value = (double)IsolatedStorageSettings.ApplicationSettings["GestureLength"];
+            }
+            else
+            {
+                lengthSlider.Value = 0.2;
             }
             useIt.IsChecked = ExtensibilityApp.IsLockScreenApplicationRegistered();
         }
