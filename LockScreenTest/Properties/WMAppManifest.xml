@@ -38,6 +38,14 @@
     <Extensions>
       <Extension ExtensionName="LockScreen_Application" ConsumerID="{CD4601F6-351B-43C7-9087-6B12BD98ED63}" TaskID="_default" ExtraFile="Extensions\\LockAppExtension.xml" />
     </Extensions>
+    <ActivatableClasses>
+      <InProcessServer>
+        <Path>Facet_Lockscreen_Bridge.dll</Path>
+        <ActivatableClass ActivatableClassId="Facet_Lockscreen_Bridge.Badge" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Facet_Lockscreen_Bridge.DetailedText" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Facet_Lockscreen_Bridge.LockScreenSnapshot" ThreadingModel="both" />
+      </InProcessServer>
+    </ActivatableClasses>
     <ScreenResolutions>
       <ScreenResolution Name="ID_RESOLUTION_WVGA" />
       <ScreenResolution Name="ID_RESOLUTION_WXGA" />

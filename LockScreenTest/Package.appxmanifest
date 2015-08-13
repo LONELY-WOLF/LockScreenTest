@@ -13,7 +13,7 @@
 
   <Properties>
     <DisplayName>LockScreenTest</DisplayName>
-    <PublisherDisplayName>Artyom</PublisherDisplayName>
+    <PublisherDisplayName>-WOLF-</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -59,6 +59,14 @@
       <InProcessServer>
         <Path>AgHostSvcs.dll</Path>
         <ActivatableClass ActivatableClassId="AgHost.BackgroundTask" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Facet_Lockscreen_Bridge.dll</Path>
+        <ActivatableClass ActivatableClassId="Facet_Lockscreen_Bridge.LockScreenSnapshot" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Facet_Lockscreen_Bridge.Badge" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Facet_Lockscreen_Bridge.DetailedText" ThreadingModel="both" />
       </InProcessServer>
     </Extension>
   </Extensions>
