@@ -252,14 +252,21 @@ namespace LockScreenTest
                         if (!String.IsNullOrEmpty(lockInfo.Badges[i].BadgeValue))
                         {
                             System.Windows.Media.Imaging.BitmapImage badge = new System.Windows.Media.Imaging.BitmapImage();
-                            if (lockInfo.Badges[i].BadgeIcon != null)
+                            try
                             {
-                                badge.SetSource(new MemoryStream(lockInfo.Badges[i].BadgeIcon));
+                                if (lockInfo.Badges[i].BadgeIcon != null)
+                                {
+                                    badge.SetSource(new MemoryStream(lockInfo.Badges[i].BadgeIcon));
+                                }
+                                else
+                                {
+                                    var str = lockInfo.Badges[i].BadgeIconURI.Substring(7);
+                                    badge.SetSource(new FileStream(lockInfo.Badges[i].BadgeIconURI.Substring(7), FileMode.Open));
+                                }
                             }
-                            else
+                            catch
                             {
-                                var str = lockInfo.Badges[i].BadgeIconURI.Substring(7);
-                                badge.SetSource(new FileStream(lockInfo.Badges[i].BadgeIconURI.Substring(7), FileMode.Open));
+                                badge.UriSource = new Uri("ms-appx:///Assets/BadgeLogo.png", UriKind.Absolute);
                             }
                             imgBadges[i].Source = badge;
                             txtBadges[i].Text = lockInfo.Badges[i].BadgeValue;
