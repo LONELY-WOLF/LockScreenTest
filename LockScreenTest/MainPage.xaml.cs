@@ -339,6 +339,8 @@ namespace LockScreenTest
             if (!SystemProtection.ScreenLocked)
             {
                 ((App)App.Current).wasLocked = false;
+                timer.Stop();
+                videoTimer.Stop();
                 NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
             }
             else
