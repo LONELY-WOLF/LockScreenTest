@@ -207,6 +207,7 @@
                     <Grid Margin="12,-24,12,0">
                         <TextBlock x:Name="HourText" Text="12:45" FontSize="144" />
                         <TextBlock x:Name="AMPM" Text="AM" FontSize="72" Margin="0,16" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                        <Image x:Name="AlarmImage" Margin="0,0,0,90" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="41" Height="47"/>
                     </Grid>
                     <TextBlock x:Name="DatePanel" Text="DatePanel" CacheMode="BitmapCache" FontSize="32" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Margin="18,-12,0,0" />
                     <TextBlock Visibility="Collapsed" x:Name="NotificationTextPanel" Text="NotificationTextPanel" CacheMode="BitmapCache" VerticalAlignment="Center" FontFamily="Segoe WP Semibold"  FontSize="20" HorizontalAlignment="Left"  Margin="18,12,0,0" TextWrapping="Wrap" />

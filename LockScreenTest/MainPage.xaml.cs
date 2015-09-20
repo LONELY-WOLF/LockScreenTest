@@ -303,6 +303,25 @@ namespace LockScreenTest
             HourText.Text = TimeAMPM[0];
             AMPM.Text = TimeAMPM.Count() > 1 ? TimeAMPM[1] : "";
             DatePanel.Text = DateTime.Now.ToShortDateString();
+
+            //Alarm
+            BitmapImage alarmBadge = new BitmapImage();
+            if (lockInfo.AlarmIcon.BadgeIcon != null)
+            {
+                try
+                {
+                    alarmBadge.SetSource(new MemoryStream(lockInfo.AlarmIcon.BadgeIcon));
+                }
+                catch
+                {
+                    alarmBadge.UriSource = new Uri("ms-appx:///Assets/BadgeLogo.png", UriKind.Absolute);
+                }
+                AlarmImage.Source = alarmBadge;
+            }
+            else
+            {
+                AlarmImage.Source = null;
+            }
             FrameworkDispatcher.Update();
         }
 
@@ -384,6 +403,10 @@ namespace LockScreenTest
                     if (prev.DetailedTexts[i].IsBold != cur.DetailedTexts[i].IsBold) return true;
                     if (prev.DetailedTexts[i].Text != cur.DetailedTexts[i].Text) return true;
                 }
+            }
+            if((prev.AlarmIcon.BadgeIcon == null) != (cur.AlarmIcon.BadgeIcon == null))
+            {
+                return true;
             }
             // TODO: more
             return false;
