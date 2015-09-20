@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2014/deployment" AppPlatformVersion="8.1">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{c6a1aa4b-49d7-434d-97e8-6b580dd982ad}" Title="LockScreenTest" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="-WOLF-" Description="Sample description" SDOptOut="false" BackUpOptOut="true" Publisher="LockScreenTest" PublisherID="{f8a65bf6-8733-4c94-8ee1-48b5b6de3ecf}">
+  <App xmlns="" ProductID="{c6a1aa4b-49d7-434d-97e8-6b580dd982ad}" Title="LockScreenTest" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="-WOLF-" Description="Sample description" SDOptOut="true" BackUpOptOut="true" Publisher="LockScreenTest" PublisherID="{f8a65bf6-8733-4c94-8ee1-48b5b6de3ecf}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
