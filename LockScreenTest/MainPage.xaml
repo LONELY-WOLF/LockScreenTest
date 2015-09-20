@@ -138,7 +138,7 @@
             </Grid.Resources>
             <Image x:Name="BackgroundImage" CacheMode="BitmapCache" Opacity="0.0" Stretch="UniformToFill"/>
             <Rectangle Fill="{StaticResource BlackBackground}" VerticalAlignment="Top" Height="32" />
-            <Grid x:Name="OverlayInformationPanel" ManipulationDelta="OverlayInformationPanel_ManipulationDelta" ManipulationCompleted="OverlayInformationPanel_ManipulationCompleted" RenderTransformOrigin="0.5,0.5" Background="{StaticResource TransparentBrush}" SizeChanged="OverlayInformationPanel_SizeChanged" ManipulationStarted="OverlayInformationPanel_ManipulationStarted">
+            <Grid x:Name="OverlayInformationPanel" ManipulationDelta="OverlayInformationPanel_ManipulationDelta" ManipulationCompleted="OverlayInformationPanel_ManipulationCompleted" RenderTransformOrigin="0.5,0.5" Background="{StaticResource TransparentBrush}" SizeChanged="OverlayInformationPanel_SizeChanged">
                 <Grid.RenderTransform>
                     <TranslateTransform x:Name="OverlayInformationPanelTranslateTransform"/>
                 </Grid.RenderTransform>

@@ -322,11 +322,6 @@ namespace LockScreenTest
             }
         }
 
-        private void OverlayInformationPanel_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
-        {
-            
-        }
-
         private void OverlayInformationPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             yToUnlock = -e.NewSize.Height * gestureLength;
