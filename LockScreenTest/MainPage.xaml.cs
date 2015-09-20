@@ -24,6 +24,8 @@ namespace LockScreenTest
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        char[] space = new char[] { ' ' };
+
         IsolatedStorageFile bg = IsolatedStorageFile.GetUserStoreForApplication();
         LockScreenSnapshot lockInfo;
         TextBlock[] txtDetailedTexts;
@@ -37,7 +39,6 @@ namespace LockScreenTest
         MediaElement me = new MediaElement();
         double gestureLength = 0.2;
         double y, yToUnlock = 400;
-        string hours = "", date = "";
         DispatcherTimer timer = new DispatcherTimer(), videoTimer = new DispatcherTimer();
 
         // Constructor
@@ -291,16 +292,10 @@ namespace LockScreenTest
                     }
                 }
             }
-            if (hours != DateTime.Now.ToString("HH:mm"))
-            {
-                hours = DateTime.Now.ToString("HH:mm");
-                HourText.Text = hours;
-            }
-            if (date != DateTime.Now.ToString("dd/MM/yy"))
-            {
-                date = DateTime.Now.ToString("dd/MM/yy");
-                DatePanel.Text = date;
-            }
+            string[] TimeAMPM = DateTime.Now.ToShortTimeString().Split(space, 2, StringSplitOptions.RemoveEmptyEntries);
+            HourText.Text = TimeAMPM[0];
+            AMPM.Text = TimeAMPM.Count() > 1 ? TimeAMPM[1] : "";
+            DatePanel.Text = DateTime.Now.ToShortDateString();
             FrameworkDispatcher.Update();
         }
 

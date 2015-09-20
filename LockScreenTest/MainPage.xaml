@@ -204,9 +204,10 @@
                             <!--<Button Content="stop" CacheMode="BitmapCache" Click="ButtonStopClick"/>-->
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel x:Name="ClockPanel"  Orientation="Horizontal" Margin="12,-24,0,0">
-                        <TextBlock x:Name="HourText" Text="12:45" Foreground="White" FontSize="140" />
-                    </StackPanel>
+                    <Grid Margin="12,-24,12,0">
+                        <TextBlock x:Name="HourText" Text="12:45" FontSize="144" />
+                        <TextBlock x:Name="AMPM" Text="AM" FontSize="72" Margin="0,16" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                    </Grid>
                     <TextBlock x:Name="DatePanel" Text="DatePanel" CacheMode="BitmapCache" FontSize="32" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Margin="18,-12,0,0" />
                     <TextBlock Visibility="Collapsed" x:Name="NotificationTextPanel" Text="NotificationTextPanel" CacheMode="BitmapCache" VerticalAlignment="Center" FontFamily="Segoe WP Semibold"  FontSize="20" HorizontalAlignment="Left"  Margin="18,12,0,0" TextWrapping="Wrap" />
                     <ItemsControl x:Name="NotificationIconsPanel" ItemsSource="{Binding Information.Icons}" CacheMode="BitmapCache" Margin="0,12,0,0">
